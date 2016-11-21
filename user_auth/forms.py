@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from nocaptcha_recaptcha.fields import NoReCaptchaField
 
 # login
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm, SetPasswordForm
 
 class RegistrationForm(UserCreationForm):
     error_messages = {
@@ -56,3 +56,11 @@ class LoginForm(AuthenticationForm):
         widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'username'}))
     password = forms.CharField(label="Password", max_length=30,
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'name': 'password'}))
+
+class PasswordForm(SetPasswordForm):
+    new_password1 = forms.CharField(label="Password", max_length=30, required=True,
+        widget=forms.PasswordInput(attrs={'class' : 'form-control', 'name' : 'password1'}))
+
+    new_password2 = forms.CharField(label="Password Confirmation", max_length=30, required=True,
+        widget=forms.PasswordInput(attrs={'class' : 'form-control', 'name' : 'password2'}),
+        help_text= ("Enter the same password as above, for verification."))
