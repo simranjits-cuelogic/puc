@@ -1,0 +1,55 @@
+{% extends 'main/base.html' %}
+{% load tag_filter %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+{% if form.errors %}
+
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+<div class="col-md-6 col-md-offset-3">
+    <div class="login-panel panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Login</h3>
+        </div>
+        <div class="panel-body">
+            <form method="post" class="form-horizontal" action="{% url 'login' %}">
+                {% csrf_token %}
+
+                {% for field in form %}
+                <div class="form-group">
+                    <span class="text-danger">{{ field.errors }}</span>
+                    <small class="">{{field.help_text}}</small>
+                    {{ field|label_with_classes:"control-label col-sm-4"}}
+                    <div class="col-sm-8">
+                        {{ field }}
+                    </div>
+                </div>
+                {% endfor %}
+
+                <div class="form-group">
+                    <div class="col-sm-6 text-right">
+                       <input class="btn btn-danger btn-sm" type="reset" value="Reset" />
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <input class="btn btn-success btn-sm" type="submit"
+                        value="Login" />
+                    </div>
+                </div>
+                <input type="hidden" name="next" value="{{ next }}" />
+            </form>
+            <div class="col-sm-12">
+                <div class="col-sm-6 text-right">
+                    <a href="{%url 'reset_password' %}">Forgot password?</a>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <a href="{%url 'register' %}">New user?</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
