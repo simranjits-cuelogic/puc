@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'user_auth.apps.UserAuthConfig',
+    'dashboard.apps.DashboardConfig',
     'nocaptcha_recaptcha',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -124,9 +125,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
-
-NORECAPTCHA_SITE_KEY = os.environ["NORECAPTCHA_SITE_KEY"]
-NORECAPTCHA_SECRET_KEY = os.environ["NORECAPTCHA_SECRET_KEY"]
+LOGIN_REDIRECT_URL = '/'
+# NORECAPTCHA_SITE_KEY = os.environ["NORECAPTCHA_SITE_KEY"]
+# NORECAPTCHA_SECRET_KEY = os.environ["NORECAPTCHA_SECRET_KEY"]
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = ''

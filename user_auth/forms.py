@@ -4,6 +4,9 @@ from django.contrib.auth.forms import UserCreationForm
 
 from nocaptcha_recaptcha.fields import NoReCaptchaField
 
+# login
+from django.contrib.auth.forms import AuthenticationForm
+
 class RegistrationForm(UserCreationForm):
     error_messages = {
         'password_mismatch': ("Password fields didn't match with each other."),
@@ -22,7 +25,7 @@ class RegistrationForm(UserCreationForm):
         widget=forms.PasswordInput(attrs={'class' : 'form-control', 'name' : 'password2'}),
         help_text= ("Enter the same password as above, for verification."))
 
-    captcha = NoReCaptchaField()
+    # captcha = NoReCaptchaField()
 
     class Meta:
         model = User
@@ -47,3 +50,9 @@ class RegistrationForm(UserCreationForm):
             user.save()
 
         return user
+
+class LoginForm(AuthenticationForm):
+    username = forms.CharField(label="Username", max_length=30,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'username'}))
+    password = forms.CharField(label="Password", max_length=30,
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'name': 'password'}))
