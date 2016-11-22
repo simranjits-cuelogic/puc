@@ -1,0 +1,52 @@
+{% extends 'main/base.html' %}
+{% load tag_filter %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<form class="form-horizontal" method="post">
+  <div class="col-md-6">
+    <fieldset>
+        <legend>Personal Information</legend>
+          {% csrf_token %}
+          {% for field in user_form %}
+          <div class="form-group">
+              <span class="text-danger">{{ field.errors }}</span>
+              <small class="">{{field.help_text}}</small>
+              {{ field|label_with_classes:"control-label col-sm-4"}}
+              <div class="col-sm-8">
+                {{ field|addcss:'form-control input-md' }}
+              </div>
+          </div>
+          {% endfor %}
+    </fieldset>
+  </div>
+
+  <div class="col-md-6">
+    <fieldset>
+        <legend>Additional Information</legend>
+          {% csrf_token %}
+          {% for field in profile_form %}
+          <div class="form-group">
+              <span class="text-danger">{{ field.errors }}</span>
+              <small class="">{{field.help_text}}</small>
+              {{ field|label_with_classes:"control-label col-sm-4"}}
+              <div class="col-sm-8">
+                {{ field|addcss:'form-control input-md' }}
+              </div>
+          </div>
+          {% endfor %}
+    </fieldset>
+    <div class="form-group">
+      <div class="col-sm-6 text-right">
+         <a href="{% url 'home'%}" class="btn btn-danger btn-sm" role ='button'>Discard</a>
+      </div>
+      <div class="col-sm-6 text-right">
+          <input class="btn btn-success btn-sm" type="submit"
+          value="Update" />
+      </div>
+    </div>
+  </div>
+</form>
+{% endblock %}
+
