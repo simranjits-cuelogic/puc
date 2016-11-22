@@ -49,4 +49,16 @@ urlpatterns = [
         },
         name= 'password_reset_complete'),
 
+    url(r'^password-change/$',
+        views.password_change, {
+        'template_name' : 'auth/password/change_password_form.html'
+        },
+        name= 'change_password'),
+
+    url(r'^password-change-done/$',
+        views.password_change_done, {
+        'template_name' : 'auth/password/change_password_done.html'
+        },
+        name= 'password_change_done'),
+
 ]
