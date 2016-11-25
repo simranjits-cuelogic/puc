@@ -1,0 +1,56 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Articles{% endblock %}
+
+{% block content %}
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'home'%}">Home</a></li>
+      <li class="breadcrumb-item active">Articles</li>
+    </ol>
+
+    <div class="container">
+        <div class="text-right">
+            <a class="btn btn-default" href="{% url 'add_article'%}">Add Article</a>
+        </div>
+    </div>
+        {% if article_list %}
+        <div class="table-responsive">
+            <table class="table table-striped table-condensed">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Content</th>
+                        <th>Published on</th>
+                        <th>Publish Status</th>
+                        <th width="15%">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for article in article_list %}
+                        <tr>
+                            <td>{{ article.title }}</td>
+                            <td>{{ article.content|truncatechars:10 }}</td>
+                            <td>{{ article.published_on }}</td>
+                            <td>
+                                <span class="label label-success">{{ article.publish_status }}</span>
+                            </td>
+                            <td width="15%">
+                                <a class="btn btn-default btn-sm"><em class="fa fa-pencil"></em></a>
+                                <a href= "{% url 'article_delete' article.id%}" class="btn btn-danger btn-sm" method='post'><em class="fa fa-trash"></em></a>
+
+                                <a href= "{% url 'publish_unpublish' article.id%}" class="btn btn-default btn-sm" method='post'>{{ article.publish_status_action }}</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="text-center">Sorry, No Article avaliables.</div>
+    {% endif %}
+
+{% endblock %}
+
+
+
+

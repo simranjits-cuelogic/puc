@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'user_auth.apps.UserAuthConfig',
     'dashboard.apps.DashboardConfig',
     'profiles.apps.ProfilesConfig',
+    'blog.apps.BlogConfig',
     'nocaptcha_recaptcha',
     'django.contrib.admin',
     'django.contrib.auth',

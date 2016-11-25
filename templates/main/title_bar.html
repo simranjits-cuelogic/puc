@@ -10,6 +10,14 @@
             <a class="navbar-brand" href="/">PUC - Blog</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-left title-bar">
+                <li>
+                    <a href="/dashboard">Dashboard</a>
+                </li>
+                <li>
+                    <a href="{% url 'article_list' %}">Article</a>
+                </li>
+            </ul>
 
             <ul class="nav navbar-nav navbar-right title-bar">
             {% if user.is_authenticated %}

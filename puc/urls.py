@@ -28,4 +28,7 @@ urlpatterns = [
     # profile app's urls
     url(r'', include('profiles.urls')),
 
+    # blog app's urls
+    url(r'', include('blog.urls')),
+
 ]

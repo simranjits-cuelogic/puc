@@ -1,0 +1,43 @@
+{% extends 'main/base.html' %}
+{% load tag_filter %}
+
+{% block title %}Article{% endblock %}
+
+{% block content %}
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="{% url 'home'%}">Home</a></li>
+  <li class="breadcrumb-item"><a href="{% url 'article_list'%}">Articles</a></li>
+  <li class="breadcrumb-item active">Add Article</li>
+</ol>
+<form class="form-horizontal" method="post" enctype="multipart/form-data">
+  <div class="col-md-6 col-md-offset-3">
+    <fieldset>
+        <legend>Personal Information</legend>
+          {% csrf_token %}
+          {% for field in form %}
+          <div class="form-group">
+              <span class="text-danger">{{ field.errors }}</span>
+              <small class="">{{field.help_text}}</small>
+              {{ field|label_with_classes:"control-label col-sm-4"}}
+              <div class="col-sm-8">
+                {{ field|addcss:'form-control input-md' }}
+              </div>
+          </div>
+          {% endfor %}
+    </fieldset>
+    <div class="form-group">
+      <div class="col-sm-4 text-right">
+         <a href="{% url 'article_list'%}" class="btn btn-danger btn-sm" role ='button'>Discard</a>
+      </div>
+      <div class="col-sm-4 text-right">
+          <input class="btn btn-success btn-sm" type="submit" name = 'save_draft'
+          value="Save Draft" />
+      </div>
+      <div class="col-sm-4 text-right">
+          <input class="btn btn-success btn-sm" type="submit" name = 'publish'
+          value="Publish" />
+      </div>
+    </div>
+  </div>
+</form>
+{% endblock %}
