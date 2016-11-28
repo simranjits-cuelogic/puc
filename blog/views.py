@@ -11,6 +11,7 @@ from .models import Article
 import datetime
 from django.views.generic import UpdateView
 
+articles_url = '/articles'
 class ArticleListView(ListView):
     queryset = Article.objects.order_by('-published_on')
     context_object_name = 'article_list'
@@ -19,7 +20,7 @@ class ArticleListView(ListView):
 class ArticleView(FormView):
     template_name = 'blog/article/form.html'
     form_class = ArticleForm
-    success_url = '/articles'
+    success_url = articles_url
 
     def form_valid(self, form):
         is_published = False
@@ -35,7 +36,6 @@ class ArticleView(FormView):
         return super(ArticleView, self).form_valid(form)
 
 def publish_unpublish(request, pk):
-    # if request.method == 'POST':
     article = get_object_or_404(Article, pk=pk)
 
     article.is_published = not article.is_published
@@ -43,43 +43,17 @@ def publish_unpublish(request, pk):
         # Always return and HttpResponseRedirect after succesfully dealing
         # with POST data. This porevents data from being posted twice if a
         # user hits the back button.
-    return HttpResponseRedirect(reverse('article_list'))
+    return HttpResponseRedirect(articles_url)
 
 def delete(request, pk):
     article = get_object_or_404(Article, pk=pk)
     if request.user == article.owner:
         article.delete()
 
-    return HttpResponseRedirect(reverse('article_list'))
+    return HttpResponseRedirect(articles_url)
 
 class EditArticleView(UpdateView):
-    # model = Article
+    model = Article
     template_name = 'blog/article/form.html'
     form_class = ArticleForm
-    success_url = '/articles'
-
-    def get_object(self, queryset=None):
-        obj = get_object_or_404(Article, pk=self.kwargs['pk'])
-        # obj = Article.objects.get_or_create(id=self.kwargs['pk'])
-
-        return obj
-
-
-
-# @transaction.atomic
-# def update_profile(request):
-#     if request.method == 'POST':
-#         user_form = UserForm(request.POST, instance = request.user)
-#         if user_form.is_valid():
-#             user_form.save()
-#             messages.success(request, ('Your profile was successfully updated!'))
-#             return redirect('home')
-#         else:
-#             print profile_form.errors
-#             messages.error(request, ('Please correct the error below.'))
-#     else:
-#         form = UserForm(instance=request.user)
-#     return render(request, 'profiles/profile.html', {
-#         'user_form': user_form,
-#         'profile_form': profile_form
-#     })
+    success_url = articles_url
