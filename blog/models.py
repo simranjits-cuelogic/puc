@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 
+from djrichtextfield.models import RichTextField
+
 import os
 # /PROJECT_ROOT/static/blogs/<blog_id>/filename
 # image saving path with users ID
@@ -11,7 +13,8 @@ def avatar_path(instance, filename):
 
 class Article(models.Model):
     title = models.CharField(max_length=30, blank=True)
-    content = models.TextField(max_length=500, blank=True)
+    # content = models.TextField(max_length=500, blank=True)
+    content = RichTextField()
 
     is_drafted = models.BooleanField(default=False)
     is_deleted = models.BooleanField(default=False)

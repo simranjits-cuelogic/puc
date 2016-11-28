@@ -31,4 +31,6 @@ urlpatterns = [
     # blog app's urls
     url(r'', include('blog.urls')),
 
+    url(r'^djrichtextfield/', include('djrichtextfield.urls'))
+
 ]
