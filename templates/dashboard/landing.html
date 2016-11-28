@@ -2,11 +2,38 @@
 {% block title %}Landing Page{% endblock %}
 {% block content %}
 
-<div class="jumbotron">
-    <h1>Hello, world!</h1>
-    <p>
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-    </p>
+<div class="container">
+    {% if article_list %}
+        {% for article in article_list %}
+        <div class="well">
+            <div class="media">
+                <a class="pull-left" href="#">
+                    <img class="media-object" src="http://placekitten.com/150/150">
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading">
+                        <a href="{% url 'article' article.id%}">{{ article.title }}</a>
+                    </h4>
+                    <p class="text-right">{{ article.user.username }}</p>
+                    <p>{{ article.content|truncatechars:100 }}</p>
+                    <ul class="list-inline list-unstyled">
+                        <li>
+                            <span>
+                                <i class="glyphicon glyphicon-calendar"></i>
+                                {{ article.published_on }}
+                            </span>
+                        </li>
+                        <li> </li>
+                        <span>
+                            <i class="glyphicon glyphicon-comment"></i>
+                            2 comments
+                        </span>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    {% endif %}
 </div>
 
 {% endblock %}

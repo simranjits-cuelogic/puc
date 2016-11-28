@@ -4,7 +4,7 @@
 
 {% block content %}
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{% url 'home'%}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'landing'%}">Home</a></li>
       <li class="breadcrumb-item active">Articles</li>
     </ol>
 
@@ -28,7 +28,7 @@
                 <tbody>
                     {% for article in article_list %}
                         <tr>
-                            <td>{{ article.title }}</td>
+                            <td><a href="{% url 'article' article.id%}">{{ article.title }}</a></td>
                             <td>{{ article.content|truncatechars:10 }}</td>
                             <td>{{ article.published_on }}</td>
                             <td>

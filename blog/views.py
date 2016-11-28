@@ -9,7 +9,8 @@ from django.views.generic import ListView
 from .models import Article
 
 import datetime
-from django.views.generic import UpdateView
+from django.utils import timezone
+from django.views.generic import UpdateView, DetailView
 
 from django.contrib import messages
 
@@ -76,3 +77,17 @@ class EditArticleView(UpdateView):
     template_name = 'blog/article/edit.html'
     form_class = ArticleForm
     success_url = articles_url
+
+class ArticleDetailView(DetailView):
+    """
+    class is responsible for providing object of Article model against corres-
+    -ponding pk.
+    """
+    model = Article
+    template_name = 'blog/article/show.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ArticleDetailView, self).get_context_data(**kwargs)
+        context['now'] = timezone.now()
+        return context
+
