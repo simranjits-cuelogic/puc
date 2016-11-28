@@ -35,7 +35,8 @@
                                 <span class="label label-success">{{ article.publish_status }}</span>
                             </td>
                             <td width="15%">
-                                <a class="btn btn-default btn-sm"><em class="fa fa-pencil"></em></a>
+                                <a href= "{% url 'edit-article' article.id%}" class="btn btn-default btn-sm"><em class="fa fa-pencil"></em></a>
+
                                 <a href= "{% url 'article_delete' article.id%}" class="btn btn-danger btn-sm" method='post'><em class="fa fa-trash"></em></a>
 
                                 <a href= "{% url 'publish_unpublish' article.id%}" class="btn btn-default btn-sm" method='post'>{{ article.publish_status_action }}</a>

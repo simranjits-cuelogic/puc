@@ -9,10 +9,7 @@ from django.views.generic import ListView
 from .models import Article
 
 import datetime
-
-
-from django.views.generic import DeleteView
-from django.http import Http404
+from django.views.generic import UpdateView
 
 class ArticleListView(ListView):
     queryset = Article.objects.order_by('-published_on')
@@ -54,3 +51,35 @@ def delete(request, pk):
         article.delete()
 
     return HttpResponseRedirect(reverse('article_list'))
+
+class EditArticleView(UpdateView):
+    # model = Article
+    template_name = 'blog/article/form.html'
+    form_class = ArticleForm
+    success_url = '/articles'
+
+    def get_object(self, queryset=None):
+        obj = get_object_or_404(Article, pk=self.kwargs['pk'])
+        # obj = Article.objects.get_or_create(id=self.kwargs['pk'])
+
+        return obj
+
+
+
+# @transaction.atomic
+# def update_profile(request):
+#     if request.method == 'POST':
+#         user_form = UserForm(request.POST, instance = request.user)
+#         if user_form.is_valid():
+#             user_form.save()
+#             messages.success(request, ('Your profile was successfully updated!'))
+#             return redirect('home')
+#         else:
+#             print profile_form.errors
+#             messages.error(request, ('Please correct the error below.'))
+#     else:
+#         form = UserForm(instance=request.user)
+#     return render(request, 'profiles/profile.html', {
+#         'user_form': user_form,
+#         'profile_form': profile_form
+#     })
