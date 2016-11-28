@@ -13,6 +13,6 @@ class LandingView(ListView):
     """
     block of code responsible for showing list of Article's objects
     """
-    queryset = Article.objects.all()
+    queryset = Article.objects.all_published()
     context_object_name = 'article_list'
     template_name = 'dashboard/landing.html'

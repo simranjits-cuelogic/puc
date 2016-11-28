@@ -12,7 +12,7 @@ def avatar_path(instance, filename):
     return os.path.join('static/blogs', str(instance.id), filename)
 
 class ArticleQuerySet(models.query.QuerySet):
-    """docstring for ArticleQuerySet"""
+    """ArticleQuerySet class for all kind of database extraction logic"""
 
     def all_published(self):
         return self.filter(is_published = True)
@@ -25,8 +25,7 @@ class ArticleManager(models.Manager):
         return ArticleQuerySet(self.model, using=self._db)
 
     def all_published(self):
-        self.get_queryset().all_published()
-
+        return self.get_queryset().all_published()
 
 class Article(models.Model):
     title = models.CharField(max_length=30, blank=True)
