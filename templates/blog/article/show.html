@@ -21,7 +21,7 @@
                 </div>
                 <div class="icerik-bilgi">
                     <a href="#"><h2>{{ article.title }}</h2></a>
-                    <p>{{ article.content }}</p>
+                    <p>{{ article.content | safe }}</p>
                 </div>
             </div>
         </div>

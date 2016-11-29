@@ -29,13 +29,13 @@
                     {% for article in article_list %}
                         <tr>
                             <td><a href="{% url 'article' article.id%}">{{ article.title }}</a></td>
-                            <td>{{ article.content|truncatechars:10 }}</td>
+                            <td>{{ article.desription|safe|truncatechars:50 }}</td>
                             <td>{{ article.published_on }}</td>
                             <td>
                                 <span class="label label-success">{{ article.publish_status }}</span>
                             </td>
                             <td width="15%">
-                                <a href= "{% url 'edit-article' article.id%}" class="btn btn-default btn-sm"><em class="fa fa-pencil"></em></a>
+                                <a href= "{% url 'edit-article' article.id%}" class="btn btn-default btn-sm"  data-confirm='Sure to delete?'><em class="fa fa-pencil"></em></a>
 
                                 <a href= "{% url 'article_delete' article.id%}" class="btn btn-danger btn-sm" method='post'><em class="fa fa-trash"></em></a>
 

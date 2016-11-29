@@ -9,7 +9,7 @@ import os
 # /PROJECT_ROOT/photos/<user_id>/filename
 # image saving path with users ID
 def avatar_path(instance, filename):
-    return os.path.join('static/avatars', str(instance.id), filename)
+    return os.path.join('avatars', str(instance.id), filename)
 
 
 class Profile(models.Model):
@@ -19,6 +19,8 @@ class Profile(models.Model):
     location = models.CharField(max_length=30, blank=True)
     birth_date = models.DateField(null=True, blank=True)
 
+    # avatar = models.ImageField(
+    #     'profile picture', null=True)
     avatar = models.ImageField(
         'profile picture',
         upload_to = avatar_path, null=True)

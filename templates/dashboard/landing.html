@@ -8,14 +8,15 @@
         <div class="well">
             <div class="media">
                 <a class="pull-left" href="#">
-                    <img class="media-object" src="http://placekitten.com/150/150">
+                    <img class="media-object" src='{{ article.image.url}}' width="150" height="150">
                 </a>
                 <div class="media-body">
                     <h4 class="media-heading">
                         <a href="{% url 'article' article.id%}">{{ article.title }}</a>
                     </h4>
                     <p class="text-right">{{ article.user.username }}</p>
-                    <p>{{ article.content|truncatechars:100 }}</p>
+                    <p>{{ article.desription | truncatechars:190 }}</p>
+
                     <ul class="list-inline list-unstyled">
                         <li>
                             <span>
@@ -26,7 +27,7 @@
                         <li> </li>
                         <span>
                             <i class="glyphicon glyphicon-comment"></i>
-                            2 comments
+                            2 comments -- underwork
                         </span>
                     </ul>
                 </div>

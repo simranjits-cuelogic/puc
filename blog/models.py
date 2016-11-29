@@ -3,13 +3,13 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 
-from djrichtextfield.models import RichTextField
+from tinymce.models import HTMLField
 
 import os
 # /PROJECT_ROOT/static/blogs/<blog_id>/filename
 # image saving path with users ID
 def avatar_path(instance, filename):
-    return os.path.join('static/blogs', str(instance.id), filename)
+    return os.path.join('blogs', str(instance.id), filename)
 
 class ArticleQuerySet(models.query.QuerySet):
     """ArticleQuerySet class for all kind of database extraction logic"""
@@ -28,9 +28,10 @@ class ArticleManager(models.Manager):
         return self.get_queryset().all_published()
 
 class Article(models.Model):
-    title = models.CharField(max_length=30, blank=True)
+    title = models.CharField(max_length=150, blank=True)
+    desription = models.CharField(max_length=200, blank=True)
     # content = models.TextField(max_length=500, blank=True)
-    content = RichTextField()
+    content = HTMLField()
 
     is_drafted = models.BooleanField(default=False)
     is_deleted = models.BooleanField(default=False)
