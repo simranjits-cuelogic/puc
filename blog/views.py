@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-from .forms import ArticleForm
+from .forms import ArticleForm, CommentForm
 from django.views.generic.edit import FormView
 
 from django.views.generic import ListView
@@ -13,6 +13,8 @@ from django.utils import timezone
 from django.views.generic import UpdateView, DetailView
 
 from django.contrib import messages
+
+from django.views import View
 
 articles_url = '/articles'
 class ArticleListView(ListView):
@@ -52,7 +54,6 @@ def publish_unpublish(request, pk):
 
     article.is_published = not article.is_published
     article.save()
-    print article.publish_status
 
     return HttpResponseRedirect(articles_url)
 
@@ -89,5 +90,26 @@ class ArticleDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(ArticleDetailView, self).get_context_data(**kwargs)
         context['now'] = timezone.now()
+        context['comment_form'] = CommentForm()
         return context
 
+class CommentView(FormView):
+    form_class = CommentForm
+
+    def post(self, request, article_id):
+
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            # form.save()
+            # Need to work here...
+            article = get_object_or_404(Article, pk=article_id)
+            article.comment_set.create(
+                comment = request.POST['comment'],
+                article_id = article_id,
+                user_id = request.user.id
+                )
+            messages.success(request, ('Your comment is posted.'))
+        else:
+            messages.error(request, ('Errro while commenting!'))
+
+        return HttpResponseRedirect(reverse('article', args=[article_id]))

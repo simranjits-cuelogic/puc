@@ -3,30 +3,82 @@
 {% block title %}Add Article{% endblock %}
 
 {% block content %}
-{%if user.is_authenticated %}
-<ol class="breadcrumb">
-  <li class="breadcrumb-item"><a href="{% url 'landing'%}">Home</a></li>
-  <li class="breadcrumb-item"><a href="{% url 'article_list'%}">Articles</a></li>
-  <li class="breadcrumb-item active">Article</li>
-</ol>
-{% endif %}
+    {%if user.is_authenticated %}
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'landing'%}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'article_list'%}">Articles</a></li>
+      <li class="breadcrumb-item active">Article</li>
+    </ol>
+    {% endif %}
 
-
-<div class="left-panel">
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <div class="col-md-12">
-                <div class="thumbnail hide">
-                    <a href="#"><img src="#" alt=""></a>
-                </div>
-                <div class="icerik-bilgi">
-                    <a href="#"><h2>{{ article.title }}</h2></a>
-                    <p>{{ article.content | safe }}</p>
+    <div class="left-panel">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="col-md-12">
+                    <div class="thumbnail hide">
+                        <a href="#"><img src="#" alt=""></a>
+                    </div>
+                    <div class="icerik-bilgi">
+                        <a href="#"><h2>{{ article.title }}</h2></a>
+                        <p>{{ article.content | safe }}</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>User Comments</h3>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-11">
+                <div class="panel panel-default">
+                    <!-- <div class="panel-heading">
+                        <strong>myusername</strong> <span class="text-muted">commented 5 days ago</span>
+                    </div> -->
+                    <div class="panel-body">
+                       <form class="form-horizontal" action='{% url "submit_comment" article_id=article.id %}' method="POST">
+                          <div class="col-md-12">
+                          {% csrf_token %}
+                          {{comment_form.comment}}
+                        <input class="btn btn-success btn-sm" type="submit" name = 'publish'
+                              value="Publish" />
+                          </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if article.all_comments %}
+            {% for comment in article.all_comments %}
+                <div class="row">
+                    <div class="col-sm-1">
+                        <div class="thumbnail">
+                            <img class="img-responsive user-photo" src="{{comment.user.profile.avatar.url}}">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-11">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <strong>{{comment.user.username}}</strong>
+                                <span class="text-muted pull-right">{% now "jS F Y H:i" %}</span>
+                            </div>
+                            <div class="panel-body">
+                               {{comment.comment}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="text-center">Sorry, No Article avaliables.</div>
+        {% endif %}
+    </div>
 
 {% endblock %}

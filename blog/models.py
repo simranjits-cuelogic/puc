@@ -65,11 +65,18 @@ class Article(models.Model):
 
         return status
 
+    def all_comments(self):
+        return self.comment_set.all()
 
+# Comment's view
+import datetime
 class Comment(models.Model):
     article = models.ForeignKey(Article, on_delete = models.CASCADE)
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
 
     comment = models.TextField(max_length=200)
 
     is_deleted = models.BooleanField(default=False)
     deleted_on = models.DateField(null=True, blank=True)
+
+    # created_on = models.DateField(default = datetime.date.now())
