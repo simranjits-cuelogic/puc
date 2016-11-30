@@ -19,13 +19,18 @@ from django.contrib import messages
 from django.views import View
 
 articles_url = '/articles'
+
+
 class ArticleListView(ListView):
     """
     block of code responsible for showing list of Article's objects
     """
-    queryset = Article.objects.order_by('-published_on')
+    # queryset = Article.objects.order_by('-published_on')
     context_object_name = 'article_list'
     template_name = 'blog/article/list.html'
+
+    def get_queryset(self):
+        return self.request.user.article_set.order_by('-published_on')
 
 class ArticleView(FormView):
     """

@@ -39,7 +39,7 @@ class Article(models.Model):
     is_published = models.BooleanField(default=False)
     published_on = models.DateTimeField(auto_now_add = True)
 
-    owner = models.ForeignKey(User, on_delete = models.CASCADE, null=True)
+    owner = models.ForeignKey(User, on_delete = models.CASCADE)
 
     objects = ArticleManager()
     # all_published = Article.objects.all_published()
