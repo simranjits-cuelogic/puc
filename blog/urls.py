@@ -17,5 +17,5 @@ urlpatterns = [
 
     # comment's model urls
     # url(r'article/(?P<pk>\d+)/comments/$', CommentView.as_view(), name='comment'),
-    url(r'article/(?P<article_id>\d+)/comments/$', CommentView.as_view(), name='submit_comment'),
+    url(r'article/(?P<article_id>\d+)/comments/$', login_required(CommentView.as_view()), name='submit_comment'),
 ]

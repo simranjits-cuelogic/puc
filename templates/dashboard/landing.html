@@ -27,7 +27,12 @@
                         <li> </li>
                         <span>
                             <i class="glyphicon glyphicon-comment"></i>
-                            2 comments -- underwork
+                            <a href="{% url 'article' article.id %}#comments">
+                                {% with article.comments_count as comments %}
+                                    {{ comments }}
+                                        comment{{ comments|pluralize }}.
+                                {% endwith %}
+                            </a>
                         </span>
                     </ul>
                 </div>

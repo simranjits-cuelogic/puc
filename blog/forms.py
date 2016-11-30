@@ -14,4 +14,8 @@ class CommentForm(forms.ModelForm):
     comment = forms.CharField(max_length=100)
     class Meta:
         model = Comment
-        fields = ['comment']
+        fields = ['comment', 'article', 'user']
+        widgets = {
+        'article': forms.HiddenInput(),
+        'user': forms.HiddenInput()
+        }

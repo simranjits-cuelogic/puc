@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-
+from datetime import datetime
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -66,10 +66,12 @@ class Article(models.Model):
         return status
 
     def all_comments(self):
-        return self.comment_set.all()
+        return self.comment_set.order_by('-created_on')[:15]
+
+    def comments_count(self):
+        return self.comment_set.count()
 
 # Comment's view
-import datetime
 class Comment(models.Model):
     article = models.ForeignKey(Article, on_delete = models.CASCADE)
     user = models.ForeignKey(User, on_delete = models.CASCADE)
@@ -79,4 +81,4 @@ class Comment(models.Model):
     is_deleted = models.BooleanField(default=False)
     deleted_on = models.DateField(null=True, blank=True)
 
-    # created_on = models.DateField(default = datetime.date.now())
+    created_on = models.DateTimeField(auto_now_add = True)

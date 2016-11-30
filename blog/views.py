@@ -95,21 +95,16 @@ class ArticleDetailView(DetailView):
 
 class CommentView(FormView):
     form_class = CommentForm
+    template_name = 'blog/article/show.html'
 
     def post(self, request, article_id):
 
         form = self.form_class(request.POST)
         if form.is_valid():
-            # form.save()
-            # Need to work here...
-            article = get_object_or_404(Article, pk=article_id)
-            article.comment_set.create(
-                comment = request.POST['comment'],
-                article_id = article_id,
-                user_id = request.user.id
-                )
+            form.save()
+            anchor = "#comment_" + str(form.instance.id)
             messages.success(request, ('Your comment is posted.'))
         else:
             messages.error(request, ('Errro while commenting!'))
 
-        return HttpResponseRedirect(reverse('article', args=[article_id]))
+        return HttpResponseRedirect(reverse('article', args=[article_id]) + anchor)

@@ -4,3 +4,10 @@ body {
 footer {
     margin-top: 30px;
 }
+.comment{
+    width: 100%!important;
+}
+
+button.comment-btn{
+    width: 100%!important;
+}
