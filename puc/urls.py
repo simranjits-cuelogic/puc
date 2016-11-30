@@ -25,4 +25,7 @@ urlpatterns = [
     # dashboard app's urls
     url(r'', include('dashboard.urls')),
 
+    # profile app's urls
+    url(r'', include('profiles.urls')),
+
 ]

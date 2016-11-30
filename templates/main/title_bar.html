@@ -10,44 +10,40 @@
             <a class="navbar-brand" href="/">PUC - Blog</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
             <ul class="nav navbar-nav navbar-right title-bar">
+            {% if user.is_authenticated %}
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Account
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li>
-                            <a href="#">Home</a>
+                            <a href="/dashboard">Home</a>
                         </li>
                         <li>
-                            <a href="#">-</a>
+                            <a href="{% url 'settings' %}">Profile</a>
                         </li>
                         <li>
                             <a href="#">--</a>
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="#">--</a>
+                            <a href="{% url 'change_password' %}">Change Password</a>
                         </li>
                         <li class="divider"></li>
                         <li>
-                        <a href="{% url 'logout'%}">Logout</a>
+                            <a href="{% url 'logout'%}">Logout</a>
                         </li>
                     </ul>
                 </li>
+                {% else %}
+                    <li><a href="{% url 'login'%}">Login</a></li>
+                    <li><a href="{% url 'register'%}">Register</a></li>
+                {% endif %}
             </ul>
+
         </div>
     </div>
 </nav>
 
-
-{% block javascript %}
-<script>
-    $(document).ready(function(){
-        {% if not user.is_authenticated %}
-        $(".title-bar").addClass("hide");
-        {% endif %}
-    });
-</script>
-
-{% endblock %}
