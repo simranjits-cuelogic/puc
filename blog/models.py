@@ -39,7 +39,7 @@ class Article(models.Model):
     is_published = models.BooleanField(default=False)
     published_on = models.DateTimeField(auto_now_add = True)
 
-    owner = models.ForeignKey(User, on_delete = models.CASCADE)
+    owner = models.ForeignKey(User, on_delete = models.CASCADE, null=True)
 
     objects = ArticleManager()
     # all_published = Article.objects.all_published()
@@ -70,6 +70,20 @@ class Article(models.Model):
 
     def comments_count(self):
         return self.comment_set.count()
+
+
+    def image_url(self):
+        """
+        Returns the URL of the image associated with this Article.
+        If an image hasn't been uploaded yet, it returns a stock image
+
+        :returns: str -- the image url
+
+        """
+        if self.image and hasattr(self.image, 'url'):
+            return self.image.url
+        else:
+            return '/static/images/default.jpg'
 
 # Comment's view
 class Comment(models.Model):

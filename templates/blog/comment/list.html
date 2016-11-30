@@ -27,7 +27,14 @@
           <div class="panel panel-default">
             <div class="panel-heading">
               <strong>{{comment.user.username}}</strong>
+
               <span class="text-muted pull-right">{{ comment.created_on|timesince }} ago.</span>
+              {% if user.is_authenticated %}
+              <span class="pull-right">
+
+                <a href="{% url 'delete_comment' article_id=comment.article.id pk=comment.id %}" method='post'>Delete</a>
+              |--</span>
+              {% endif %}
             </div>
             <div class="panel-body">
              {{comment.comment}}

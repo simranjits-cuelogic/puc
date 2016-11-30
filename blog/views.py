@@ -1,16 +1,18 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
+from django.http import Http404
+
 from django.urls import reverse
 
 from .forms import ArticleForm, CommentForm
 from django.views.generic.edit import FormView
 
 from django.views.generic import ListView
-from .models import Article
+from .models import Article, Comment
 
 import datetime
 from django.utils import timezone
-from django.views.generic import UpdateView, DetailView
+from django.views.generic import UpdateView, DetailView, DeleteView
 
 from django.contrib import messages
 
@@ -98,13 +100,40 @@ class CommentView(FormView):
     template_name = 'blog/article/show.html'
 
     def post(self, request, article_id):
-
+        """ post method getting the request for saving the comment."""
         form = self.form_class(request.POST)
         if form.is_valid():
             form.save()
-            anchor = "#comment_" + str(form.instance.id)
+            anchor = "#comments"# + str(form.instance.id)
             messages.success(request, ('Your comment is posted.'))
         else:
             messages.error(request, ('Errro while commenting!'))
 
         return HttpResponseRedirect(reverse('article', args=[article_id]) + anchor)
+
+
+class CommentDeleteView(DeleteView):
+    model = Comment
+
+    def get(self, request, *args, **kwargs):
+        """ converting get request to post. Need for get_success_url action"""
+        return self.post(request, *args, **kwargs)
+
+    def get_success_url(self):
+        anchor = "#comments"# + str(form.instance.id)
+        article_id = self.kwargs['article_id']
+
+        return reverse('article', args=[article_id]) + anchor
+
+    def get_object(self, queryset=None):
+        """ get the coresponding object"""
+        queryset = super(CommentDeleteView, self).get_object()
+
+        pk = self.kwargs['pk']
+        article_id = self.kwargs['article_id']
+
+        """ Hook to ensure object is owned by request.user. """
+        if not queryset.user == self.request.user:
+            raise Http404
+
+        return queryset
