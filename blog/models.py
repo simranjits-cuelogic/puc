@@ -90,9 +90,12 @@ class Comment(models.Model):
     article = models.ForeignKey(Article, on_delete = models.CASCADE)
     user = models.ForeignKey(User, on_delete = models.CASCADE)
 
-    comment = models.TextField(max_length=200)
+    comment = models.TextField(max_length=500)
 
     is_deleted = models.BooleanField(default=False)
     deleted_on = models.DateField(null=True, blank=True)
 
     created_on = models.DateTimeField(auto_now_add = True)
+
+    def __str__(self):
+        return self.comment[:75] + (self.comment[75:] and '..')
