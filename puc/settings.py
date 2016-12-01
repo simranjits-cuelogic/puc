@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'tinymce',
     'django.contrib.staticfiles',
+
+
 ]
 
 MIDDLEWARE = [
@@ -53,6 +55,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'puc.middleware.puc_middleware.PucMiddleware',
 ]
 
 ROOT_URLCONF = 'puc.urls'

@@ -2,6 +2,46 @@
 {% block title %}Landing Page{% endblock %}
 {% block content %}
 
+
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <h1>Dummmy -^- blogggeR</h1>
+            <p class="lead">Man must explore, and this is exploration at its greatest!!</p>
+        </div>
+    </div>
+
+    <div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 text-center">
+            <h1>Search Form our Database...</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <form action="{% url 'landing'%}" class="search-form">
+                <!-- {% csrf_token %} -->
+                <div class="form-group has-feedback">
+                    <label for="search" class="sr-only">Search</label>
+                    <input type="text" class="form-control" name="q" id="search" placeholder="keyword for search...">
+                    <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="container">
     {% if article_list %}
         {% for article in article_list %}

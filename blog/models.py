@@ -4,7 +4,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 from tinymce.models import HTMLField
-
+from django.db.models import Q
 import os
 # /PROJECT_ROOT/static/blogs/<blog_id>/filename
 # image saving path with users ID
@@ -17,6 +17,9 @@ class ArticleQuerySet(models.query.QuerySet):
     def all_published(self):
         return self.filter(is_published = True)
 
+    def all_draft(self):
+        return self.filter(is_published = False)
+
 class ArticleManager(models.Manager):
     """
     Manager class for Article model to deal with all kind fo database queries.
@@ -26,6 +29,9 @@ class ArticleManager(models.Manager):
 
     def all_published(self):
         return self.get_queryset().all_published()
+
+    def all_draft(self):
+        return self.get_queryset().all_draft()
 
 class Article(models.Model):
     title = models.CharField(max_length=150, blank=True)
@@ -83,6 +89,14 @@ class Article(models.Model):
             return self.image.url
         else:
             return '/static/images/default.jpg'
+
+    @classmethod
+    def combine_filter(cls, query):
+        return cls.objects.filter(
+            Q(title__icontains=query) |
+            Q(desription__icontains=query) |
+            Q(content__icontains=query)
+            )
 
 # Comment's view
 class Comment(models.Model):

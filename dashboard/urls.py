@@ -6,4 +6,5 @@ from .views import LandingView
 urlpatterns = [
     url(r'^dashboard/$', views.home, name='home'),
     url(r'^$', LandingView.as_view(), name='landing'),
+
 ]
