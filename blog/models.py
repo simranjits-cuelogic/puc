@@ -71,7 +71,6 @@ class Article(models.Model):
     def comments_count(self):
         return self.comment_set.count()
 
-
     def image_url(self):
         """
         Returns the URL of the image associated with this Article.
