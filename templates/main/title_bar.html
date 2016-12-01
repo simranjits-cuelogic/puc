@@ -1,5 +1,6 @@
+
 <nav class="navbar navbar-default">
-    <div class="container-fluid">
+    <div class="navbar-inner container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span>
@@ -10,6 +11,16 @@
             <a class="navbar-brand" href="/">PUC - Blog</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-left title-bar">
+                {% if user.is_authenticated %}
+                <li>
+                    <a href="/dashboard">Dashboard</a>
+                </li>
+                <li>
+                    <a href="{% url 'article_list' %}">Article</a>
+                </li>
+                {% endif %}
+            </ul>
 
             <ul class="nav navbar-nav navbar-right title-bar">
             {% if user.is_authenticated %}
@@ -22,7 +33,7 @@
                             <a href="/dashboard">Home</a>
                         </li>
                         <li>
-                            <a href="{% url 'settings' %}">Profile</a>
+                            <a href="{% url 'settings' %}">Profile ({{user.username}})</a>
                         </li>
                         <li>
                             <a href="#">--</a>
@@ -46,4 +57,3 @@
         </div>
     </div>
 </nav>
-

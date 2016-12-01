@@ -34,12 +34,14 @@ INSTALLED_APPS = [
     'user_auth.apps.UserAuthConfig',
     'dashboard.apps.DashboardConfig',
     'profiles.apps.ProfilesConfig',
+    'blog.apps.BlogConfig',
     'nocaptcha_recaptcha',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'tinymce',
     'django.contrib.staticfiles',
 ]
 
@@ -125,8 +127,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
-LOGIN_REDIRECT_URL = '/dashboard'
-LOGIN_URL = '/login'
+MEDIA_URL = '/media/'
+
+STATICFILES_DIRS = [
+   os.path.join(BASE_DIR, 'static'),
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static-cdn')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media-cdn')
+
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/login/'
 # NORECAPTCHA_SITE_KEY = os.environ["NORECAPTCHA_SITE_KEY"]
 # NORECAPTCHA_SECRET_KEY = os.environ["NORECAPTCHA_SECRET_KEY"]
 

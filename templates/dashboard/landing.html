@@ -2,6 +2,49 @@
 {% block title %}Landing Page{% endblock %}
 {% block content %}
 
-    <h2>Landing Page</h2>
+<div class="container">
+    {% if article_list %}
+        {% for article in article_list %}
+        <div class="well">
+            <div class="media">
+                <a class="pull-left" href="#">
+                    <img class="media-object" src='{{ article.image_url}}' width="150" height="150">
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading">
+                        <a href="{% url 'article' article.id%}">{{ article.title }}</a>
+                    </h4>
+                    <p>
+                        {{ article.desription | truncatechars:190 | default:'No descripiton available.' }}
+                    </p>
+
+                    <ul class="list-inline list-unstyled">
+                        <li>
+                            <i class="icon-user"></i>
+                             by <a href="#">{{ article.owner.username }}</a>
+                        </li>
+                        <li>
+                            <span>
+                                <i class="glyphicon glyphicon-calendar"></i>
+                                {{ article.published_on }}
+                            </span>
+                        </li>
+                        <li> </li>
+                        <span>
+                            <i class="glyphicon glyphicon-comment"></i>
+                            <a href="{% url 'article' article.id %}#comments">
+                                {% with article.comments_count as comments %}
+                                    {{ comments }}
+                                        comment{{ comments|pluralize }}.
+                                {% endwith %}
+                            </a>
+                        </span>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    {% endif %}
+</div>
 
 {% endblock %}

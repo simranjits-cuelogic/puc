@@ -10,3 +10,8 @@ def label_with_classes(value, arg):
 @register.filter(name = 'addcss')
 def addcss(value, arg):
     return value.as_widget(attrs={'class': arg})
+
+# {{ form.field|with_value:'value' }}
+@register.filter(name = 'with_value')
+def with_value(value, arg):
+    return value.as_widget(attrs={'value': arg})
