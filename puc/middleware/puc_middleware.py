@@ -9,5 +9,12 @@ class PucMiddleware(MiddlewareMixin):
         proxy methods.
         see. user_auth/models.py
         """
+
+        """following code for handling for unauthenticated requests"""
+        if request.user.is_anonymous:
+            return None
+
+        """override User instance with Proxy Class instance to get
+        all proxy method in object"""
         request.user = User.objects.get(pk=request.user.id)
         return None

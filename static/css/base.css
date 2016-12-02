@@ -23,3 +23,6 @@ button.comment-btn{
 
 .grow { transition: all .2s ease-in-out; }
 .grow:hover { transform: scale(1.1); }
+.form-control-feedback {width: 65px!important;}
+select.form-controll { width: 68px;}
+.col-md-00 {width: 5.33333%;}

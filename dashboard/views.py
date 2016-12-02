@@ -24,9 +24,9 @@ class LandingView(ListView):
 
         # Get the q GET parameter
         query = self.request.GET.get('q')
-        # query = query.replace(" ","+")
+
         if query is None:
             return queryset
 
-        queryset = Article.combine_filter(query)
+        queryset = Article.combine_filter(query, self.request.GET.get('withh'))
         return queryset

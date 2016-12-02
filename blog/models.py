@@ -90,13 +90,29 @@ class Article(models.Model):
         else:
             return '/static/images/default.jpg'
 
+    # @classmethod
+    # def combine_filter(cls, query):
+    #     return cls.objects.filter(
+    #         Q(title__icontains=query) |
+    #         Q(desription__icontains=query) |
+    #         Q(content__icontains=query)
+    #         )
+
     @classmethod
-    def combine_filter(cls, query):
-        return cls.objects.filter(
-            Q(title__icontains=query) |
-            Q(desription__icontains=query) |
-            Q(content__icontains=query)
-            )
+    def combine_filter(cls, query, col):
+        if col == 'title':
+            result = cls.objects.filter(Q(title__icontains=query))
+        elif col == 'description':
+            result = cls.objects.filter(Q(desription__icontains=query))
+        elif col == 'content':
+            result = cls.objects.filter(Q(content__icontains=query))
+        else:
+            result = cls.objects.filter(
+                Q(title__icontains=query) |
+                Q(desription__icontains=query) |
+                Q(content__icontains=query)
+                )
+        return result
 
 # Comment's view
 class Comment(models.Model):

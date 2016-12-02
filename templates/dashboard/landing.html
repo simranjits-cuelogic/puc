@@ -1,5 +1,6 @@
 {% extends "main/base.html" %}
 {% block title %}Landing Page{% endblock %}
+{% load tag_filter %}
 {% block content %}
 
 
@@ -16,14 +17,27 @@
             <h1>Search Form our Database...</h1>
         </div>
     </div>
+
     <div class="row">
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-md-9 col-md-offset-3">
             <form action="{% url 'landing'%}" class="search-form">
                 <!-- {% csrf_token %} -->
-                <div class="form-group has-feedback">
+                <div class="form-group has-feedback col-md-8">
                     <label for="search" class="sr-only">Search</label>
-                    <input type="text" class="form-control" name="q" id="search" placeholder="keyword for search...">
+                    <input type="text" class="form-control" name="q" id="search" placeholder="keyword for search..." value="{{ request.GET.q }}">
                     <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                </div>
+                <div class="col-md-00 col-md-1">with</div>
+                <div class="col-md-1">
+                  <select class="form-controll" name="withh">
+                    <option value="all">--All--</option>
+                    <option value="title">Title</option>
+                    <option value="description" >Description</option>
+                    <option value="content">Content</option>
+                  </select>
+                </div>
+                <div class="col-md-2">
+                  <input class="form-controll" value="Search" type="submit">
                 </div>
             </form>
         </div>

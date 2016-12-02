@@ -1,6 +1,8 @@
 from django import template
 
 register = template.Library()
+# load following line into template
+# {% load tag_filter %}
 
 @register.filter(is_safe=True)
 def label_with_classes(value, arg):
@@ -30,4 +32,3 @@ def total_articles_count(value):
 @register.filter(name = 'draft_articles_count')
 def draft_articles_count(value):
     return value.draft_articles().count()
-
