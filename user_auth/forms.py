@@ -56,6 +56,14 @@ class LoginForm(AuthenticationForm):
         widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'username'}))
     password = forms.CharField(label="Password", max_length=30,
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'name': 'password'}))
+    remember_me = forms.BooleanField(required=False, widget=forms.CheckboxInput())
+
+    def clean(self):
+        # call upper class clean method to get all the default functionalities
+        cleaned_data = super(LoginForm, self).clean()
+
+        if not cleaned_data.get('remember_me'):
+            self.request.session.set_expiry(0)
 
 class PasswordForm(SetPasswordForm):
     new_password1 = forms.CharField(label="Password", max_length=30, required=True,

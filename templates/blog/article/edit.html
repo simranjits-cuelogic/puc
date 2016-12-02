@@ -1,0 +1,16 @@
+{% extends 'main/base.html' %}
+{% block title %}edit Article{% endblock %}
+{{ form.media }}
+{% block content %}
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="{% url 'home'%}">Home</a></li>
+  <li class="breadcrumb-item"><a href="{% url 'article_list'%}">Articles</a></li>
+  <li class="breadcrumb-item active">Edit Article</li>
+</ol>
+<form class="form-horizontal" method="post" enctype="multipart/form-data">
+  <div class="col-md-12">
+    {% include "blog/article/form_fieldset.html" %}
+    {% include "blog/article/form_btnset.html" %}
+  </div>
+</form>
+{% endblock %}

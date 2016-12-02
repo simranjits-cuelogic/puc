@@ -1,0 +1,32 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Add Article{% endblock %}
+
+{% block content %}
+    {%if user.is_authenticated %}
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'landing'%}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'article_list'%}">Articles</a></li>
+      <li class="breadcrumb-item active">Article</li>
+    </ol>
+    {% endif %}
+
+    <div class="left-panel">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="col-md-12">
+                    <div class="thumbnail hide">
+                        <a href="#"><img src="#" alt=""></a>
+                    </div>
+                    <div class="icerik-bilgi">
+                        <a href="#"><h2>{{ article.title }}</h2></a>
+                        <p>{{ article.content | safe }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include "blog/comment/list.html" %}
+
+{% endblock %}

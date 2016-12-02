@@ -1,7 +1,104 @@
 {% extends "main/base.html" %}
 {% block title %}Landing Page{% endblock %}
+{% load tag_filter %}
 {% block content %}
 
-    <h2>Landing Page</h2>
+
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <h1>Dummmy -^- blogggeR</h1>
+            <p class="lead">Man must explore, and this is exploration at its greatest!!</p>
+        </div>
+    </div>
+
+    <div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 text-center">
+            <h1>Search Form our Database...</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-9 col-md-offset-3">
+            <form action="{% url 'landing'%}" class="search-form">
+                <!-- {% csrf_token %} -->
+                <div class="form-group has-feedback col-md-8">
+                    <label for="search" class="sr-only">Search</label>
+                    <input type="text" class="form-control" name="q" id="search" placeholder="keyword for search..." value="{{ request.GET.q }}">
+                    <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                </div>
+                <div class="col-md-00 col-md-1">with</div>
+                <div class="col-md-1">
+                  <select class="form-controll" name="withh">
+                    <option value="all">--All--</option>
+                    <option value="title">Title</option>
+                    <option value="description" >Description</option>
+                    <option value="content">Content</option>
+                  </select>
+                </div>
+                <div class="col-md-2">
+                  <input class="form-controll" value="Search" type="submit">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="container">
+    {% if article_list %}
+        {% for article in article_list %}
+        <div class="well">
+            <div class="media">
+                <a class="pull-left" href="#">
+                    <img class="media-object" src='{{ article.image_url}}' width="150" height="150">
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading">
+                        <a href="{% url 'article' article.id%}">{{ article.title }}</a>
+                    </h4>
+                    <p>
+                        {{ article.desription | truncatechars:190 | default:'No descripiton available.' }}
+                    </p>
+
+                    <ul class="list-inline list-unstyled">
+                        <li>
+                            <i class="icon-user"></i>
+                             by <a href="#">{{ article.owner.username }}</a>
+                        </li>
+                        <li>
+                            <span>
+                                <i class="glyphicon glyphicon-calendar"></i>
+                                {{ article.published_on }}
+                            </span>
+                        </li>
+                        <li> </li>
+                        <span>
+                            <i class="glyphicon glyphicon-comment"></i>
+                            <a href="{% url 'article' article.id %}#comments">
+                                {% with article.comments_count as comments %}
+                                    {{ comments }}
+                                        comment{{ comments|pluralize }}.
+                                {% endwith %}
+                            </a>
+                        </span>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    {% endif %}
+</div>
 
 {% endblock %}

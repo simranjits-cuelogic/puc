@@ -1,7 +1,20 @@
 {% extends "main/base.html" %}
 {% block title %}Dashboard{% endblock %}
+{% load tag_filter %}
+
 {% block content %}
 
-    <h2>Dashboard Page</h2>
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <h1>Dummmy -^- blogggeR</h1>
+            <p class="lead">Man must explore, and this is exploration at its greatest!!</p>
+            <p>
+                <span>Total Articles: {{ user|total_articles_count }} | </span>
+                <span>Published Articles: {{ user|published_articles_count }} | </span>
+                <span>Draft Articles: {{ user|draft_articles_count }}</span>
+            </p>
+
+        </div>
+    </div>
 
 {% endblock %}

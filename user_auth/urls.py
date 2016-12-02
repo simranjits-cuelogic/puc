@@ -4,6 +4,7 @@ from . import views as auth_view
 # Add this import for session
 from django.contrib.auth import views
 from user_auth.forms import LoginForm, PasswordForm
+from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     # # root url
@@ -18,10 +19,11 @@ urlpatterns = [
     # Session URLs
     url(r'^login/$', views.login, {
         'template_name': 'auth/session/form.html',
-        'authentication_form': LoginForm
+        'authentication_form': LoginForm,
+        'redirect_authenticated_user': True
         }, name= 'login'),
 
-    url(r'^logout/$', views.logout, {
+    url(r'^logout/$', login_required(views.logout), {
         'next_page': '/login'
         }, name= 'logout'),
 
@@ -39,24 +41,26 @@ urlpatterns = [
         views.password_reset_confirm,{
         'template_name': 'auth/password/new_password_form.html',
         'post_reset_redirect': 'password-reset-complete/',
-        'set_password_form': PasswordForm
+        'set_password_form': PasswordForm,
+        'redirect_authenticated_user': True
         },
         name='password_reset_confirm'),
 
     url(r'^password-reset-complete/$',
         views.password_reset_complete, {
-        'template_name' : 'auth/password/reset_done'
+        'template_name' : 'auth/password/reset_done',
+        'redirect_authenticated_user': True
         },
         name= 'password_reset_complete'),
 
     url(r'^password-change/$',
-        views.password_change, {
+        login_required(views.password_change), {
         'template_name' : 'auth/password/change_password_form.html'
         },
         name= 'change_password'),
 
     url(r'^password-change-done/$',
-        views.password_change_done, {
+        login_required(views.password_change_done), {
         'template_name' : 'auth/password/change_password_done.html'
         },
         name= 'password_change_done'),

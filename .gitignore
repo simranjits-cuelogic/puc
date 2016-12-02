@@ -1,2 +1,4 @@
 *.pyc
 /static/avatars/*.*
+/media-cdn/*
+/static-cdn/*
